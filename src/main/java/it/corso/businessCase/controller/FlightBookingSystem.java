@@ -1,8 +1,10 @@
 package it.corso.businessCase.controller;
 
 import it.corso.businessCase.model.Booking;
+import it.corso.businessCase.model.Flight;
 import it.corso.businessCase.model.dto.BookingDto;
 import it.corso.businessCase.repository.BookingRepository;
+import it.corso.businessCase.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,8 @@ public class FlightBookingSystem {
 
     @Autowired
     BookingRepository bookingRepository;
+    @Autowired
+    FlightRepository flightRepository;
 
 
     @PostMapping("/createBooking")
@@ -45,11 +49,20 @@ public class FlightBookingSystem {
     }
 
     @GetMapping("/bookings/{fromairport}/{toairport}/{date}")
-    public List<Booking> getBookings(@PathVariable("fromairport") String fromairport,
-                                     @PathVariable("toairport") String toairport,
-                                     @PathVariable("date") Date date) {
+    public List<Flight> getBookings(@PathVariable("fromairport") String fromairport,
+                                    @PathVariable("toairport") String toairport,
+                                    @PathVariable("date") Date date) {
 
-        return bookingRepository.findByFromAirportAndToAirportAndFlightDate(fromairport, toairport, date);
+        return flightRepository.findByFromAirportAndToAirportAndFlightDate(fromairport, toairport, date);
+    }
+
+    @GetMapping("/getseats/{flightNumber}/{date}")
+    public int getAvailableSeats(@PathVariable("flightNumber") String flightNumber,@PathVariable("date") Date date) {
+        int flightTotalSeats = 100; //ipotizzando i posti totali di un ipotetica classe Flight
+        int reservedSeats = bookingRepository.countNumSeatsByFlightNumberAndFlightDate(flightNumber, date);
+
+        return flightTotalSeats - reservedSeats;
+
     }
 
     @DeleteMapping("/deleteById/{id}")

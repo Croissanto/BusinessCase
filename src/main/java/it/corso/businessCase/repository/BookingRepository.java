@@ -10,5 +10,5 @@ public interface BookingRepository extends CrudRepository<Booking, Integer> {
 
     List<Booking> findByFlightNumberAndFlightDate(String flightNumber, Date date);
     List<Booking> findByPassengerName(String passengerName);
-    List<Booking> findByFromAirportAndToAirportAndFlightDate(String fromAirport, String toAirport, Date date);
+    int countNumSeatsByFlightNumberAndFlightDate(String flightNumber, Date date);
 }
