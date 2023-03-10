@@ -4,10 +4,7 @@ package it.corso.businessCase.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -27,6 +24,8 @@ public class Booking {
     private int numSeats;
     private String passengerName;
     private String flightNumber;
+    @ManyToOne
+    private Flight flight;
 
     public Booking(String flightNumber, Date flightDate, String passengerName, int numSeats) {
         this.flightNumber = flightNumber;

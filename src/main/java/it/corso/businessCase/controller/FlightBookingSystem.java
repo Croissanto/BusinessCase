@@ -58,7 +58,7 @@ public class FlightBookingSystem {
 
     @GetMapping("/getseats/{flightNumber}/{date}")
     public int getAvailableSeats(@PathVariable("flightNumber") String flightNumber,@PathVariable("date") Date date) {
-        int flightTotalSeats = 100; //ipotizzando i posti totali di un ipotetica classe Flight
+        int flightTotalSeats = flightRepository.countTotalSeatsByFlightNumberAndFlightDate(flightNumber, date);
         int reservedSeats = bookingRepository.countNumSeatsByFlightNumberAndFlightDate(flightNumber, date);
 
         return flightTotalSeats - reservedSeats;

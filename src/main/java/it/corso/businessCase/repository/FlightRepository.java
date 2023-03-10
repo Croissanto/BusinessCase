@@ -10,4 +10,5 @@ import java.util.List;
 public interface FlightRepository extends CrudRepository<Flight, Integer> {
 
     List<Flight> findByFromAirportAndToAirportAndFlightDate(String fromAirport, String toAirport, Date date);
+    int countTotalSeatsByFlightNumberAndFlightDate(String flightNumber, Date date);
 }
